@@ -52,6 +52,43 @@ This is super basic, and the author is learning how to cobble together perl
 modules.  Namely, you need to set @INC somehow to include lib, or else the
 script will likely not work.
 
+TESTING
+-------
+
+Recommended way to test, using bash and `prove`:
+
+1. Create a .env file in the repository with limited permissions;
+2. Export the appropriate environment variables for MATRIX_SERVER, MATRIX_USER,
+   and MATRIX_PASSWORD; then
+3. Dot-source the .env via.
+
+Sample .env file:
+
+    export MATRIX_SERVER=matrix.org
+    export MATRIX_USER=my_bot_1
+    export MATRIX_PASSWORD=my_bot_1_password
+
+Do `chmod 600` on the .env file to ensure no other user can read it, especially
+if you are in a multiuser environment.  Then adapt the sample .env file values.
+
+On the Matrix home server, create the user matching the MATRIX_USER and
+MATRIX_PASSWORD values.  Then, create or add a room for the bot named
+"Automation".
+
+The .env file is added to the .gitignore, so do not worry about accidentally
+committing the file.  However, it is recommended to use a dedicated bot user
+for testing, both to control the test environment, and to narrow the
+compromised surface area in case credentials are leaked.
+
+Dot-source the .env file to set up your environment variables:
+
+    . .env
+
+After following the above, you should be able to execute the following in the
+repository root and run the tests successfully:
+
+    prove -l
+
 BUGS
 ----
 
