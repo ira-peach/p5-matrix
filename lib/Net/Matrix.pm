@@ -97,7 +97,10 @@ sub access_token {
 
 sub retrieve_supported_login_types {
     my $class = shift;
-    my $response = $basic_http->get("$class->{server}/_matrix/client/v3/login");
+    my ($server) = @_;
+    $server //= $class->{server};
+
+    my $response = $basic_http->get("$server/_matrix/client/v3/login");
     my $content = decode_json $response->{content};
 
     my @flow_types;
